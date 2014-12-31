@@ -1,5 +1,5 @@
 window.onload = function(){
-	var freqBinNumber = Math.pow(2,6),
+	var freqBinNumber = Math.pow(2,11),
 freqBuffer    = new Float32Array(freqBinNumber);
 	// set up for audio playback
 try {
@@ -22,21 +22,33 @@ catch(e) {
 
 
 
+window.oscillator    = context.createOscillator();
 analyser      = context.createAnalyser();
 
+
+window.onkeydown = function()
+{
+	// this.oscilator.frequency.value = 500
+}
+
 analyser.fftSize = freqBinNumber;
-analyser.smoothingTimeConstant = 0;
+// analyser.smoothingTimeConstant = .7;
 
+window.oscillator.type = 'sin'
+window.oscillator.frequency.value = 0;
+window.oscillator.start(0);
+window.oscillator.connect(analyser);
 
+analyser.connect(context.destination)
 hFreqScale = d3.scale.linear()
-		.range([0,300])
+		.range([20,window.innerHeight/2])
 		.domain([analyser.minDecibels,analyser.maxDecibels])
 
 
 function connectStream(stream)
 {
 	var source = context.createMediaStreamSource(stream);
-	source.connect(analyser);
+	// source.connect(analyser);
 	go();
 }
 
@@ -68,7 +80,7 @@ svg.selectAll("path")
 		.data(data)
 		.enter()
 		.append("path")
-		.attr("stroke-width", 10)
+		.attr("stroke-width", 5)
 		.attr("d",function(d){return(lineFunction(d.path))})
 		.attr("fill","none")
 		.attr("stroke-linecap","round")
@@ -104,7 +116,7 @@ function go()
 		d.dpath = d.dpath.add(v).norm().scale(d.volume/50)
 		p.push(p[l-1].add(d.dpath))
 		
-		if (l >100)
+		if (l >1)
 		{
 			p.shift()
 		}
@@ -127,17 +139,12 @@ var lineFunction = d3.svg.line()
 
 
 function stream (bin,numbins,volume) {
-	// volume between 0 and 1
-	//parameters should be
-	/* allowed variance from starting position
-	*/
-	this.volume = volume
-	this.radius = (window.innerWidth-100)/numbins
-	width = window.innerWidth-100
-	height = window.innerHeight
-	this.pin = new vector([bin*width/numbins+50,height/2])
-	this.path = [this.pin,this.pin]
-	this.dpath = zeroVector(2)
+	this.volume   = volume
+	width         = window.innerWidth-100
+	height        = window.innerHeight
+	this.pin      = new vector([bin*width/numbins+50,height/2])
+	this.path     = [this.pin,this.pin]
+	this.dpath    = zeroVector(2)
 	this.variance = width*height
-	this.color = "rgba("+Math.floor(255*(1-bin/numbins))+",75,"+Math.floor(255*(bin/numbins))+",.8)"
+	this.color    = "rgba("+Math.floor(255*(1-bin/numbins))+",75,"+Math.floor(255*(bin/numbins))+",.8)"
 }
