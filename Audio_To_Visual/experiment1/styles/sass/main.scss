@@ -1,0 +1,55 @@
+body
+{
+	overflow: hidden;
+}
+
+.col-xs-4
+{
+	text-align:center;
+	font-family: 'Lobster Two', cursive;
+	font-size:20px;
+	padding:20px;
+	background-color:rgba(200,75,127,.4);
+	color:white;
+}
+
+
+.glyphicon
+
+{
+	position: relative;
+	padding:20px;
+	text-align: center;
+	
+	border-radius:35px;
+	
+	transition:all .6s;
+	background-color: rgba(200,75,127,.0);
+	color:white;
+}
+
+.glyphicon:hover
+{
+	background-color: white;
+	color: rgba(200,75,127,.4);
+	cursor:pointer;
+}
+
+
+#instructions {
+    -webkit-animation: myfirst 5s; /* Chrome, Safari, Opera */
+    animation: myfirst 5s;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes myfirst {
+    from {background: height:auto;display: block;}
+    to {background:height:0px;display: hidden;}
+}
+
+/* Standard syntax */
+@keyframes myfirst {
+    from {background: height:auto;display: blok;}
+    to {background:height:0px;display: hidden;}
+}
+

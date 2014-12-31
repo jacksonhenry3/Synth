@@ -17,14 +17,6 @@ for(var i = 0; i < visableBins; i++) {
 	frequencyCircles.push(c)
 	}
 
-// set up for audio input
-// try {
-// 	navigator.getUserMedia = navigator.webkitGetUserMedia
-// 	navigator.webkitGetUserMedia({audio: true, video: false}, connectStream, microphoneError);
-// }
-// catch(e) {
-// 	alert("Sorry, your browser doesn't support the magic of getUserMedia \n try the latest firefox or chrome");
-// }
 
 function connectStream(stream)
 {
@@ -56,7 +48,7 @@ function render(c,i,array)
 
 	p = c.origin
 	canvasCtx.beginPath();
-	canvasCtx.arc(p.x, h/2,c.volume, 0, 2 * Math.PI, false);
+	canvasCtx.arc(p.x, h/3,c.volume, 0, 2 * Math.PI, false);
 	canvasCtx.fillStyle = c.color;
 	canvasCtx.fill();
 }
@@ -96,9 +88,9 @@ audio.controls = false;
 audio1.playbackRate = 1
 audio.autoplay = false;
 audio1.controls = false;
-audio1.autoplay = true;
-document.getElementById('bob').appendChild(audio);
-document.getElementById('bob').appendChild(audio1);
+audio1.autoplay = false;
+document.getElementById('song1').appendChild(audio);
+document.getElementById('song2').appendChild(audio1);
 
 var source = context.createMediaElementSource(audio);
   source.connect(analyser);
@@ -117,14 +109,14 @@ function playnote()
 
 	if (c === 32)
 	{
-		if (audio1.paused)
-		{
-			audio1.play()
-		}
-		else
+		if (! audio1.paused)
 		{
 			audio1.pause()
-		};
+		}
+		if (! audio.paused)
+		{
+			audio.pause()
+		}
 		
 	}
 	console.log(c)
@@ -133,8 +125,23 @@ function playnote()
 
 }
 
+s1 = document.getElementById('song2')
+s2 = document.getElementById('song1')
 
+s1.onclick = function(){if (audio.paused){audio.play()}else {audio.pause()};}
+s2.onclick = function(){if (audio1.paused){audio1.play();console.log('a')}else {audio1.pause()};}
 
+m = document.getElementById('mic')
+
+m.onclick = function(){
+// set up for audio input
+try {
+	navigator.getUserMedia = navigator.webkitGetUserMedia
+	navigator.webkitGetUserMedia({audio: true, video: false}, connectStream, microphoneError);
+}
+catch(e) {
+	alert("Sorry, your browser doesn't support the magic of getUserMedia \n try the latest firefox or chrome");
+}}
 
 go()
 
