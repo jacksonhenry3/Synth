@@ -6,7 +6,7 @@ var w = window.innerWidth,
 	freqBinNumber = Math.pow(2,11),
 	timeBuffer    = new Uint8Array(freqBinNumber),
 	freqBuffer    = new Float32Array(freqBinNumber),
-	visableBins = Math.floor(freqBinNumber/40),
+	visableBins = Math.floor(freqBinNumber/25),
 	frequencyCircles = [];
 
 canvas.width  = w;
