@@ -3,9 +3,10 @@ var w = window.innerWidth,
 	h = window.innerHeight,
 	canvas = document.getElementById('myCanvas');
 	canvasCtx = canvas.getContext('2d'),
-	freqBinNumber = Math.pow(2,7),
+	freqBinNumber = Math.pow(2,11),
+	timeBuffer    = new Uint8Array(freqBinNumber),
 	freqBuffer    = new Float32Array(freqBinNumber),
-	visableBins = Math.floor(freqBinNumber),
+	visableBins = Math.floor(freqBinNumber/40),
 	frequencyCircles = [];
 
 canvas.width  = w;
@@ -39,22 +40,24 @@ function microphoneError(e) {
 function render(c,i,array)
 {
 	p = c.position
-	c.volume = volumeScale(freqBuffer[i])
-	if (p.magnitude()<c.volume)
-	{
-		c.randomKick(10000)
-	}
-	else
-	{
-		c.radialKick(-Math.pow(c.position.magnitude(),2.3))
-	}
+	c.volume = Math.max(0,volumeScale(freqBuffer[i]))
+	// if (c.volume>15)
+	// {
+	// 	c.randomKick(10000)
+	// }
+	// else
+	// {
+	// 	c.radialKick(-Math.pow(c.position.magnitude(),2.3))
+	// }
+	c.randomKick(1000)
+	c.acceleration = c.acceleration.add(springForce(p,100/(c.volume+1)))
 	c.updatePosition()
-	// c.draw(canvasCtx)
+	c.draw(canvasCtx)
 
 	p = c.origin
 	canvasCtx.beginPath();
-	canvasCtx.arc(p.x, p.y+Math.max(0,c.volume)*10, Math.max(0,c.volume), 0, 2 * Math.PI, false);
-	canvasCtx.fillStyle = "rgba(0,0,0,.1)";
+	canvasCtx.arc(p.x, h/2,c.volume, 0, 2 * Math.PI, false);
+	canvasCtx.fillStyle = c.color;
 	canvasCtx.fill();
 }
 
@@ -77,6 +80,7 @@ function repulsion(r,k)
 function go(){
 	canvas.height = h;
 	analyser.getFloatFrequencyData(freqBuffer);
+	analyser.getByteTimeDomainData(timeBuffer);
 	frequencyCircles.forEach(render)
 	window.requestAnimationFrame(go)
 }
@@ -87,12 +91,12 @@ function go(){
 var audio = new Audio();
 var audio1 = new Audio();
 audio.src = "http://www.bachorgan.com/DanLong/Toccata__Fugue_in_D_Mi.mp3";
-audio1.src = 'http://webaudioapi.com/samples/visualizer/chrono.mp3';
-audio.controls = true;
-audio.playbackRate = 1
+audio1.src = 'https://storage-new.newjamendo.com/download/track/1169718/mp32/';
+audio.controls = false;
+audio1.playbackRate = 1
 audio.autoplay = false;
-audio1.controls = true;
-audio1.autoplay = false;
+audio1.controls = false;
+audio1.autoplay = true;
 document.getElementById('bob').appendChild(audio);
 document.getElementById('bob').appendChild(audio1);
 
@@ -102,11 +106,32 @@ var source = context.createMediaElementSource(audio);
   source1.connect(analyser);
 
 
+document.onkeydown = playnote
+
+// assign keys to notes
+// shift octaves with the left and right arrows
+function playnote()
+{
+	var c = event.keyCode
+		f = 0;
+
+	if (c === 32)
+	{
+		if (audio1.paused)
+		{
+			audio1.play()
+		}
+		else
+		{
+			audio1.pause()
+		};
+		
+	}
+	console.log(c)
 
 
 
-
-
+}
 
 
 

@@ -157,14 +157,14 @@ var oscillator    = context.createOscillator(),
 	};
 
 // set up the oscilator
-oscillator.type = 'sin';
+oscillator.type = 'triangle';
 oscillator.frequency.value = 0;
 oscillator.start(0);
 oscillator.connect(analyser)
 
 // set up the anylyser
 analyser.fftSize = freqBinNumber;
-analyser.smoothingTimeConstant = .6;
+analyser.smoothingTimeConstant = .9;
 analyser.connect(context.destination)
 
 // play a note when a key is pressed
@@ -176,87 +176,93 @@ function playnote()
 {
 	var c = event.keyCode
 		f = 0;
-		
-	if (c===39)
-	{
-		octave+=1
-		octave = Math.min(octave,7)
-		f = notes["C"+String(octave)]
-	};
-	if (c===37)
-	{
-		octave-=1
-		octave = Math.max(octave,0)
-		f = notes["C"+String(octave)]
-	};
-   	if (c===65)
-	{
-		f = notes["C"+String(octave)]
-	}
-	else if (c===87)
-	{
-		f = notes["C#"+String(octave)]
-	}
-	else if (c===83)
-	{
-		f = notes["D"+String(octave)]
-	}
-	else if (c===69)
-	{
-		f = notes["D#"+String(octave)]
-	}
-	else if (c===68)
-	{
-		f = notes["E"+String(octave)]
-	}
-	else if (c===70)
-	{
-		f = notes["F"+String(octave)]
-	}
-	else if (c===84)
-	{
-		f = notes["F#"+String(octave)]
-	}
-	else if (c===71)
-	{
-		f = notes["G"+String(octave)]
-	}
-	else if (c===89)
-	{
-		f = notes["G#"+String(octave)]
-	}
-	else if (c===72)
-	{
-		f = notes["A"+String(octave)]
-	}
-	else if (c===85)
-	{
-		f = notes["A#"+String(octave)]
-	}
-	else if (c===74)
-	{
-		f = notes["B"+String(octave)]
-	}
-	else if (c===75)
-	{
-		f = notes["C"+String(octave+1)]
-	}
-	else if (c===79)
-	{
-		f = notes["C#"+String(octave+1)]
-	}
-	else if (c===76)
-	{
-		f = notes["D"+String(octave+1)]
-	}
-	else if (c===80)
-	{
-		f = notes["D#"+String(octave+1)]
-	}
-	else if (c===32)
-	{
-		f = 0
-	};
 
-	osc.frequency.value = f
+	if (c === 32)
+	{
+		audio1.pause()
+	}
+	console.log(c)
+		
+	// if (c===39)
+	// {
+	// 	octave+=1
+	// 	octave = Math.min(octave,7)
+	// 	f = notes["C"+String(octave)]
+	// };
+	// if (c===37)
+	// {
+	// 	octave-=1
+	// 	octave = Math.max(octave,0)
+	// 	f = notes["C"+String(octave)]
+	// };
+ //   	if (c===65)
+	// {
+	// 	f = notes["C"+String(octave)]
+	// }
+	// else if (c===87)
+	// {
+	// 	f = notes["C#"+String(octave)]
+	// }
+	// else if (c===83)
+	// {
+	// 	f = notes["D"+String(octave)]
+	// }
+	// else if (c===69)
+	// {
+	// 	f = notes["D#"+String(octave)]
+	// }
+	// else if (c===68)
+	// {
+	// 	f = notes["E"+String(octave)]
+	// }
+	// else if (c===70)
+	// {
+	// 	f = notes["F"+String(octave)]
+	// }
+	// else if (c===84)
+	// {
+	// 	f = notes["F#"+String(octave)]
+	// }
+	// else if (c===71)
+	// {
+	// 	f = notes["G"+String(octave)]
+	// }
+	// else if (c===89)
+	// {
+	// 	f = notes["G#"+String(octave)]
+	// }
+	// else if (c===72)
+	// {
+	// 	f = notes["A"+String(octave)]
+	// }
+	// else if (c===85)
+	// {
+	// 	f = notes["A#"+String(octave)]
+	// }
+	// else if (c===74)
+	// {
+	// 	f = notes["B"+String(octave)]
+	// }
+	// else if (c===75)
+	// {
+	// 	f = notes["C"+String(octave+1)]
+	// }
+	// else if (c===79)
+	// {
+	// 	f = notes["C#"+String(octave+1)]
+	// }
+	// else if (c===76)
+	// {
+	// 	f = notes["D"+String(octave+1)]
+	// }
+	// else if (c===80)
+	// {
+	// 	f = notes["D#"+String(octave+1)]
+	// }
+	// else if (c===32)
+	// {
+	// 	f = 0
+	// };
+
+	// osc.frequency.value = f
 }
