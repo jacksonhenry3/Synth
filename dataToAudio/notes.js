@@ -762,4 +762,4 @@ function nextNote () {
 
 }
 
-window.setInterval(nextNote,200)
+window.setInterval(nextNote,100)
