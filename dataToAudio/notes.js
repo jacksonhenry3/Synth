@@ -741,9 +741,11 @@ window.i = 0
 a = new voice(0)
 b = new voice(0)
 c = new voice(0)
+
 a.start()
 b.start()
 c.start()
+
 function nextNote () {
 	 
 	value = data[window.i]
@@ -757,13 +759,19 @@ function nextNote () {
 	}
 	else 
 	{
-		a.stop()
-		b.stop()
-		c.stop()
+		a.oscilator.frequency.value = 0
+		b.oscilator.frequency.value = 0
+		c.oscilator.frequency.value = 0
+		clearInterval(interv)
+		console.log('r')
 	}
 
 }
 window.onload = function(){
 	earth = document.getElementById('filter')
-	window.setInterval(nextNote,100)
+
+	earth.onclick = function(){
+		window.i = 0;
+		interv = window.setInterval(nextNote,200)}
+	
 }
