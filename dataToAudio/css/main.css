@@ -3,6 +3,8 @@ body
 	margin:0px;
 	padding:0px;
 	font-family: 'Open Sans', sans-serif;
+	background: #FCFCFC;
+	color:#222;
 }
 h1
 {
@@ -17,12 +19,13 @@ h1
 #title
 {
 	background: rgb(70,110,220);
+
 }
 
 #filter
 {
 	cursor: pointer;
-	/*transition:background .1s;*/
+	transition:background .2s;
 	margin:50px auto;
 	margin-top:60px;
 	width:300px;
