@@ -164,8 +164,8 @@ oscillator.connect(analyser)
 
 // set up the anylyser
 analyser.fftSize = freqBinNumber;
-analyser.smoothingTimeConstant = .9;
-analyser.connect(context.destination)
+analyser.smoothingTimeConstant = .5;
+// analyser.connect(context.destination)
 
 // play a note when a key is pressed
 document.onkeydown = playnote

@@ -6,7 +6,7 @@ var w = window.innerWidth,
 	freqBinNumber = Math.pow(2,11),
 	timeBuffer    = new Uint8Array(freqBinNumber),
 	freqBuffer    = new Float32Array(freqBinNumber),
-	visableBins = Math.floor(freqBinNumber/25),
+	visableBins = Math.floor(freqBinNumber/20),
 	frequencyCircles = [];
 
 canvas.width  = w;
@@ -48,7 +48,7 @@ function render(c,i,array)
 
 	p = c.origin
 	canvasCtx.beginPath();
-	canvasCtx.arc(p.x, h/3,c.volume, 0, 2 * Math.PI, false);
+	canvasCtx.arc(p.x, h/2,c.volume, 0, 2 * Math.PI, false);
 	canvasCtx.fillStyle = c.color;
 	canvasCtx.fill();
 }
@@ -82,15 +82,17 @@ function go(){
 
 var audio = new Audio();
 var audio1 = new Audio();
-audio.src = "http://www.bachorgan.com/DanLong/Toccata__Fugue_in_D_Mi.mp3";
-audio1.src = 'https://storage-new.newjamendo.com/download/track/1169718/mp32/';
+http://popplers5.bandcamp.com/download/track?enc=mp3-v0&fsig=beaa09bc1187ed227178410cee9f3c54&id=1035631454&ts=1420155600.2644786357
+// audio.src = "http://www.bachorgan.com/DanLong/Toccata__Fugue_in_D_Mi.mp3";
+// audio.src = "http://popplers5.bandcamp.com/download/track?enc=mp3-v0&fsig=beaa09bc1187ed227178410cee9f3c54&id=1035631454&ts=1420155600.2644786357";
+// audio1.src = 'https://storage-new.newjamendo.com/download/track/1169718/mp32/';
 audio.controls = false;
 audio1.playbackRate = 1
 audio.autoplay = false;
 audio1.controls = false;
 audio1.autoplay = false;
-document.getElementById('song1').appendChild(audio);
-document.getElementById('song2').appendChild(audio1);
+// document.getElementById('song1').appendChild(audio);
+// document.getElementById('song2').appendChild(audio1);
 
 var source = context.createMediaElementSource(audio);
   source.connect(analyser);
@@ -125,26 +127,32 @@ function playnote()
 
 }
 
-s1 = document.getElementById('song2')
-s2 = document.getElementById('song1')
+// s1 = document.getElementById('song2')
+// s2 = document.getElementById('song1')
 
-s1.onclick = function(){if (audio.paused){audio.play()}else {audio.pause()};}
-s2.onclick = function(){if (audio1.paused){audio1.play();console.log('a')}else {audio1.pause()};}
+// s1.onclick = function(){if (audio.paused){audio.play()}else {audio.pause()};}
+// s2.onclick = function(){if (audio1.paused){audio1.play();console.log('a')}else {audio1.pause()};}
 
 m = document.getElementById('mic')
 
-m.onclick = function(){
-// set up for audio input
+// m.onclick = function(){
+// // set up for audio input
+// try {
+// 	navigator.getUserMedia = navigator.webkitGetUserMedia
+// 	navigator.webkitGetUserMedia({audio: true, video: false}, connectStream, microphoneError);
+// }
+// catch(e) {
+// 	alert("Sorry, your browser doesn't support the magic of getUserMedia \n try the latest firefox or chrome");
+// }}
+
+go()
+
+
 try {
 	navigator.getUserMedia = navigator.webkitGetUserMedia
 	navigator.webkitGetUserMedia({audio: true, video: false}, connectStream, microphoneError);
 }
 catch(e) {
 	alert("Sorry, your browser doesn't support the magic of getUserMedia \n try the latest firefox or chrome");
-}}
-
-go()
-
-
-
+}
 }
