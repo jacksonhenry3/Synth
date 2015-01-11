@@ -772,6 +772,6 @@ window.onload = function(){
 
 	earth.onclick = function(){
 		window.i = 0;
-		interv = window.setInterval(nextNote,200)}
+		interv = window.setInterval(nextNote,450)}
 	
 }
